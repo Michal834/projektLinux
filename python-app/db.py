@@ -24,8 +24,17 @@ class db:
     def delete_event(self, user_data):
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("DELETE FROM wydarzenia WHERE opis = %s", (user_data['opis'],))
+        cursor.execute("DELETE FROM wydarzenia WHERE id_wydarzenia = %s", (user_data['id_wydarzenia'],))
         conn.commit()
         cursor.close()
         conn.close()
-        return { "status":"ok","deleted_id": user_data['opis'] }
+        return { "status":"ok","deleted_id": user_data['id_wydarzenia'] }
+
+    def update_event(self, user_data):
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("UPDATE wydarzenia SET nazwa=%s, data_poczatek=%s, data_koniec=%s, opis=%s, id_lokalizacja=%s, id_kategoria=%s, id_organizator=%s WHERE id_wydarzenia=%s", (user_data['nazwa'], user_data['data_poczatek'], user_data['data_koniec'], user_data['opis'], user_data['id_lokalizacja'], user_data['id_kategoria'], user_data['id_organizator'], user_data['id_wydarzenia']))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return { "status":"ok","updated_id": user_data['id_wydarzenia'] }        
