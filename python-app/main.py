@@ -17,3 +17,10 @@ async def save_event(request: Request):
     result = my_db.save_event(user_data)
     return JSONResponse(status_code=201, content=result)
 
+@app.post("event/delete")
+async def delete_event(request: Request):
+    user_data = await request.json()
+    #sample payload: {"opis":"Some description"}
+    my_db = db()
+    result = my_db.delete_event(user_data)
+    return JSONResponse(status_code=200, content=result)

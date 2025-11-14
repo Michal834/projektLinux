@@ -20,3 +20,12 @@ class db:
         cursor.close()
         conn.close()
         return { "status":"ok","added_id": cursor.lastrowid } 
+
+    def delete_event(self, user_data):
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("DELETE FROM wydarzenia WHERE opis = %s", (user_data['opis'],))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return { "status":"ok","deleted_id": user_data['opis'] }
